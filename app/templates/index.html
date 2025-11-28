@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Heart Disease Prediction</title>
+    <style>
+        body { font-family: Segoe UI, Arial; background: #f4f6f8; padding: 40px; text-align: center; }
+        form { background: #fff; display: inline-block; padding: 24px 32px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,.1); text-align: left; }
+        label { display: block; margin-top: 10px; font-weight: 600; }
+        input, select { width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ccc; margin-top: 6px; }
+        button { margin-top: 18px; padding: 10px 16px; border: 0; border-radius: 8px; background: #1e90ff; color: #fff; cursor: pointer; }
+        button:hover { background: #187bcd; }
+        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    </style>
+    </head>
+<body>
+    <h1>Heart Disease Prediction</h1>
+    <p>Enter patient features to predict the presence of heart disease.</p>
+    <form action="/predict" method="post">
+        <div class="row">
+            <div>
+                <label>Age</label>
+                <input type="number" step="1" name="age" required>
+            </div>
+            <div>
+                <label>Sex (1=Male, 0=Female)</label>
+                <select name="sex">
+                    <option value="1">Male</option>
+                    <option value="0">Female</option>
+                </select>
+            </div>
+            <div>
+                <label>Chest Pain Type (cp)</label>
+                <select name="cp">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            <div>
+                <label>Resting BP (trestbps)</label>
+                <input type="number" step="1" name="trestbps" required>
+            </div>
+            <div>
+                <label>Cholesterol (chol)</label>
+                <input type="number" step="1" name="chol" required>
+            </div>
+            <div>
+                <label>Fasting Blood Sugar (fbs, 1/0)</label>
+                <select name="fbs">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                </select>
+            </div>
+            <div>
+                <label>Rest ECG (restecg)</label>
+                <select name="restecg">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </div>
+            <div>
+                <label>Max Heart Rate (thalach)</label>
+                <input type="number" step="1" name="thalach" required>
+            </div>
+            <div>
+                <label>Exercise Induced Angina (exang, 1/0)</label>
+                <select name="exang">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                </select>
+            </div>
+            <div>
+                <label>ST Depression (oldpeak)</label>
+                <input type="number" step="0.1" name="oldpeak" required>
+            </div>
+            <div>
+                <label>Slope</label>
+                <select name="slope">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </div>
+            <div>
+                <label>Number of Major Vessels (ca)</label>
+                <select name="ca">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            <div>
+                <label>Thal</label>
+                <select name="thal">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+        </div>
+        <button type="submit">Predict</button>
+    </form>
+</body>
+</html>

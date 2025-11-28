@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prediction Result</title>
+    <style>
+        body { font-family: Segoe UI, Arial; background: #eef3f7; text-align:center; padding-top:80px; }
+        .card { background:#fff; display:inline-block; padding:36px 48px; border-radius:16px; box-shadow:0 6px 16px rgba(0,0,0,.15); }
+        .ok { color:#00b894; font-size:22px; font-weight:700; }
+        .warn { color:#d63031; font-size:22px; font-weight:700; }
+        a { display:inline-block; margin-top:18px; text-decoration:none; background:#1e90ff; color:#fff; padding:10px 16px; border-radius:8px; }
+    </style>
+    </head>
+<body>
+    <div class="card">
+        <h1>Prediction Result</h1>
+        {% if prediction == 'disease' %}
+            <p class="warn">The patient is likely to have <strong>HEART DISEASE</strong>.</p>
+        {% else %}
+            <p class="ok">The patient is likely to have <strong>NO HEART DISEASE</strong>.</p>
+        {% endif %}
+        <a href="/">Try Again</a>
+    </div>
+</body>
+</html>
