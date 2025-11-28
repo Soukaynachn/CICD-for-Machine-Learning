@@ -67,9 +67,11 @@ def train_models(X_train, y_train, X_test, y_test):
     
     return best_model, best_name, results
 
-def save_model_and_metrics(model, model_name, columns, results, 
+def save_model_and_metrics(model, model_name, columns, results, y_test, y_pred,
                            model_dir='Model', results_dir='Results'):
     """Save the trained model, columns, and performance metrics"""
+    import matplotlib.pyplot as plt
+    from sklearn.metrics import ConfusionMatrixDisplay, f1_score
     
     # Create directories if they don't exist
     os.makedirs(model_dir, exist_ok=True)
@@ -87,15 +89,36 @@ def save_model_and_metrics(model, model_name, columns, results,
         pickle.dump(list(columns), f)
     print(f"Model columns saved to {columns_path}")
     
-    # Save performance metrics
+    # Calculate metrics
+    accuracy = results[model_name]
+    f1 = f1_score(y_test, y_pred, average='macro')
+    
+    # Save metrics as text file (for CML)
+    metrics_txt_path = os.path.join(results_dir, 'metrics.txt')
+    with open(metrics_txt_path, 'w') as f:
+        f.write(f"\nAccuracy = {accuracy:.2f}, F1 Score = {f1:.2f}.")
+    print(f"Metrics text saved to {metrics_txt_path}")
+    
+    # Save performance metrics as JSON
     metrics = {
         'best_model': model_name,
+        'accuracy': accuracy,
+        'f1_score': f1,
         'all_results': results
     }
     metrics_path = os.path.join(results_dir, 'model_performance.json')
     with open(metrics_path, 'w') as f:
         json.dump(metrics, f, indent=4)
-    print(f"Performance metrics saved to {metrics_path}")
+    print(f"Performance metrics JSON saved to {metrics_path}")
+    
+    # Save confusion matrix plot
+    cm = confusion_matrix(y_test, y_pred)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm)
+    disp.plot()
+    plot_path = os.path.join(results_dir, 'model_results.png')
+    plt.savefig(plot_path, dpi=120)
+    plt.close()
+    print(f"Confusion matrix plot saved to {plot_path}")
 
 def main():
     """Main training pipeline"""
@@ -112,8 +135,11 @@ def main():
     # Train and compare models
     best_model, best_name, results = train_models(X_train, y_train, X_test, y_test)
     
+    # Get predictions for confusion matrix
+    y_pred = best_model.predict(X_test)
+    
     # Save model and metrics
-    save_model_and_metrics(best_model, best_name, columns, results)
+    save_model_and_metrics(best_model, best_name, columns, results, y_test, y_pred)
     
     print("\n" + "="*50)
     print("Training completed successfully!")

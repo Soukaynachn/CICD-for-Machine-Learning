@@ -18,8 +18,16 @@ jobs:
       with:
         python-version: '3.9'
     
+    - name: Setup CML
+      uses: iterative/setup-cml@v1
+    
     - name: Install dependencies
       run: make install
     
     - name: Train model
       run: make train
+      
+    - name: Evaluate model and create CML report
+      env:
+        REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: make eval
